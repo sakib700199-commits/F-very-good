@@ -2530,8 +2530,9 @@ async def handle_deploy_action(
                 f"\n{UI.TRIANGLE} PID: {proc.pid}"
             )
 
+        p_name = project['project_name']
         text = (
-            f"{Emoji.DEPLOY} {Fonts.bold('DEPLOY')} - {Fonts.bold(project['project_name'])} {Emoji.DEPLOY}\n"
+            f"{Emoji.DEPLOY} {Fonts.bold('DEPLOY')} - {Fonts.bold(p_name)} {Emoji.DEPLOY}\n"
             f"{UI.DIVIDER_STAR}\n\n"
             f"{status_icon} {Fonts.small_caps('status')}: {status_text}\n"
             f"{Emoji.CODE} {Fonts.small_caps('type')}: {project['project_type']}\n"
@@ -3594,8 +3595,11 @@ async def show_projects_menu(
             type_icons = {"python": "🐍", "nodejs": "📦", "java": "☕", "unknown": "❓"}
             type_icon = type_icons.get(proj["project_type"], "❓")
 
+            # Python 3.8 compatibility fix
+            p_name = proj['project_name']
+            p_display = f"{i}. {p_name}"
             text += (
-                f"{status} {Fonts.bold(f'{i}. {proj['project_name']}')}\n"
+                f"{status} {Fonts.bold(p_display)}\n"
                 f"  {type_icon} {Fonts.small_caps('type')}: {proj['project_type']}\n"
                 f"  {Emoji.FILE} {Fonts.small_caps('main')}: {proj['main_file'] or 'Not set'}\n"
                 f"  {Emoji.STATS} {Fonts.small_caps('deploys')}: {proj['deploy_count']}\n\n"
@@ -4592,11 +4596,12 @@ async def handle_confirmation(
             await query.answer("❌ Project not found!", show_alert=True)
             return
 
+        p_name = project['project_name']
         text = (
             f"{Emoji.WARNING} {Fonts.bold('CONFIRM DELETE')} {Emoji.WARNING}\n"
             f"{UI.DIVIDER_STAR}\n\n"
             f"{UI.BULLET} {Fonts.small_caps('are you sure you want to delete')}:\n\n"
-            f"  {Emoji.PACKAGE} {Fonts.bold(project['project_name'])}\n"
+            f"  {Emoji.PACKAGE} {Fonts.bold(p_name)}\n"
             f"  {Emoji.CODE} {Fonts.small_caps('type')}: {project['project_type']}\n\n"
             f"{Emoji.ERROR} {Fonts.small_caps('this action cannot be undone!')}\n"
             f"{UI.BULLET} {Fonts.small_caps('all files and logs will be removed.')}\n\n"
@@ -6527,10 +6532,11 @@ async def enhanced_handle_deploy_action(
         auto_restart_status = Emoji.ONLINE if project["auto_restart"] else Emoji.OFFLINE
         ar_text = "ᴏɴ" if project["auto_restart"] else "ᴏғғ"
 
+        p_name = project['project_name']
         text = (
             f"{Emoji.DEPLOY} {Fonts.bold('DEPLOY CONSOLE')} {Emoji.DEPLOY}\n"
             f"{UI.DIVIDER_STAR}\n\n"
-            f"{Emoji.DIAMOND} {Fonts.bold(project['project_name'])}\n\n"
+            f"{Emoji.DIAMOND} {Fonts.bold(p_name)}\n\n"
             f"  {status_icon} {Fonts.small_caps('status')}: {status_text}\n"
             f"  {Emoji.CODE} {Fonts.small_caps('type')}: {project['project_type']}\n"
             f"  {Emoji.FILE} {Fonts.small_caps('main')}: {project['main_file'] or 'Not set'}\n"
